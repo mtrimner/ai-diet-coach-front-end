@@ -21,7 +21,6 @@ class RegistrationForm extends React.Component {
         event.preventDefault();
         const data = { user: {
             name: this.state.name,
-            username: this.state.username,
             email: this.state.email,
             password: this.state.password,
             password_confirmation: this.state.password_confirmation

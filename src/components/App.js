@@ -9,15 +9,15 @@ import Navbar from './Navbar';
 
 const App = () => {
 
-    return(
+    return (
         <div className="container">
             <BrowserRouter>
-                <div>
-                    <Navbar />
-                    <Route path="/" exact component={HomePage} />
-                    <Route path="/sign-up" exact component={RegistrationForm} />
-                    <Route path="/log-in" exact component={LoginForm} />
-                </div>
+            <div>
+                <Navbar />
+                <Route path="/" exact component={HomePage} />
+                <Route path="/sign-up" exact component={RegistrationForm} />
+                <Route path="/log-in" exact component={LoginForm} />
+            </div>
             </BrowserRouter>
         </div>
     )

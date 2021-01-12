@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { signIn, signOut } from '../actions';
 
 class LoginForm extends React.Component {
@@ -32,9 +33,9 @@ class LoginForm extends React.Component {
         fetch("http://localhost:3000/login", requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             this.props.signIn(data.user)
             localStorage.setItem("token", data.token)
+            this.props.history.push('/')
         })
     }
 
@@ -58,4 +59,4 @@ class LoginForm extends React.Component {
 
 }
 
-export default connect(null, { signIn, signOut })(LoginForm);
+export default connect(null, { signIn, signOut })(withRouter(LoginForm));

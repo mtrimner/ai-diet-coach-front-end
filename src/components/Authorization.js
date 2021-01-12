@@ -12,7 +12,7 @@ class Authorization extends React.Component {
     
     onSignOutClick = () => {
         localStorage.removeItem("token")
-        this.auth.signOut()
+        this.props.signOut()
     }
 
     renderAuthButton() {

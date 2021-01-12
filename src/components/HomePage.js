@@ -3,7 +3,9 @@ import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
-import Navbar from './Navbar'
+import LandingPage from './LandingPage';
+import Navbar from './Navbar';
+import UserInfoForm from './UserInfoForm';
 
 class HomePage extends React.Component {
   
@@ -22,13 +24,14 @@ class HomePage extends React.Component {
             })
         } else { this.props.signOut()}
     };
-
-
+    
 
     render() {
+        const renderDisplay =  this.props.isSignedIn ? "Dashboard" : <LandingPage />
         return (
             <div>
-                <RegistrationForm/>
+                <UserInfoForm />
+                {renderDisplay}
             </div>
         )
     }
