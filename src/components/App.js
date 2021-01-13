@@ -4,6 +4,7 @@ import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
 import HomePage from './HomePage';
 import Navbar from './Navbar';
+import UserInfoForm from './UserInfoForm';
 
 
 
@@ -17,6 +18,7 @@ const App = () => {
                 <Route path="/" exact component={HomePage} />
                 <Route path="/sign-up" exact component={RegistrationForm} />
                 <Route path="/log-in" exact component={LoginForm} />
+                <Route path="/basic-info" exact component={UserInfoForm} />
             </div>
             </BrowserRouter>
         </div>

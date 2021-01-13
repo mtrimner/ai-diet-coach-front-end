@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { signIn, signOut } from '../actions';
 
 class RegistrationForm extends React.Component {
@@ -40,6 +41,7 @@ class RegistrationForm extends React.Component {
         .then(data => {
             this.props.signIn(data.user)
             localStorage.setItem("token", data.token)
+            this.props.history.push('./basic-info')
         })
     }
 
@@ -77,4 +79,4 @@ const mapStateToProps = (state) => {
 
     }
 }
-export default connect(mapStateToProps, {signIn, signOut})(RegistrationForm);
+export default connect(mapStateToProps, {signIn, signOut})(withRouter(RegistrationForm));

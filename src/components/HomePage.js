@@ -6,6 +6,7 @@ import { signIn, signOut } from '../actions';
 import LandingPage from './LandingPage';
 import Navbar from './Navbar';
 import UserInfoForm from './UserInfoForm';
+import NewDiet from './NewDiet';
 
 class HomePage extends React.Component {
   
@@ -30,7 +31,7 @@ class HomePage extends React.Component {
         const renderDisplay =  this.props.isSignedIn ? "Dashboard" : <LandingPage />
         return (
             <div>
-                <UserInfoForm />
+                <NewDiet />
                 {renderDisplay}
             </div>
         )

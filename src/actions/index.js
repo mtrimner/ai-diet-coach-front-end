@@ -17,3 +17,10 @@ export const signOut = () => {
         type: 'SIGN_OUT'
     }
 }
+
+export const changeDiet = (diet) => {
+    return {
+        type: 'CHANGE_DIET',
+        payload: diet
+    }
+}
