@@ -3,7 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom'
 import RegistrationForm from './RegistrationForm';
 import LoginForm from './LoginForm';
 import HomePage from './HomePage';
-import Navbar from './Navbar';
+import Header from './Header';
 import UserInfoForm from './UserInfoForm';
 
 
@@ -14,7 +14,7 @@ const App = () => {
         <div className="container">
             <BrowserRouter>
             <div>
-                <Navbar />
+                <Header />
                 <Route path="/" exact component={HomePage} />
                 <Route path="/sign-up" exact component={RegistrationForm} />
                 <Route path="/log-in" exact component={LoginForm} />

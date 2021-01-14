@@ -4,7 +4,7 @@ import LoginForm from './LoginForm';
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
 import LandingPage from './LandingPage';
-import Navbar from './Navbar';
+import Header from './Header';
 import UserInfoForm from './UserInfoForm';
 import NewDiet from './NewDiet';
 
