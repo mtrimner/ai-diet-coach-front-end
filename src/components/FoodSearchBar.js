@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Col, Form, ListGroup, Image } from 'react-bootstrap';
 
 const FoodSearchBar = () => {
     const [text, setText] = useState('');
@@ -39,15 +39,29 @@ const FoodSearchBar = () => {
         console.log(results)
     }, [debouncedText]);
 
-    // const renderedResults - results.map((result))
+    const renderedResults = results.map((result) => {
+        return (
+            <ListGroup>
+                <ListGroup.Item  as="li" action key={result.id} eventKey={result.id} >
+                    <Image src={result.photo.thumb} className="mr-5" fluid thumbnail style={{maxHeight: '80px', maxWidth: 'auto'}}/>
+                    {result.food_name}
+                </ListGroup.Item>
+            </ListGroup>     
+        )
+    })
 
     return (
+        <>
         <Form>
             <Form.Group>
                 <Form.Label>Search Food</Form.Label>
                 <Form.Control type="text" value={text} onChange={e => setText(e.target.value)}/>
             </Form.Group>
         </Form>
+            <ListGroup>
+                {renderedResults}
+            </ListGroup>  
+        </>
     )
 }
 

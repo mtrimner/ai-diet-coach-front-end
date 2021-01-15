@@ -5,6 +5,7 @@ import { fetchNutritionRecommendations } from '../actions';
 import MealInfo from './MealInfo';
 import DailyTotalGoals from './DailyTotalGoals';
 import FoodSearchBar from './FoodSearchBar'
+import MealCard from './MealCard';
 
 class MealGoals extends React.Component {
 
@@ -40,12 +41,8 @@ class MealGoals extends React.Component {
                 <DailyTotalGoals amount={this.props.carbs}/>
                 <DailyTotalGoals amount={this.props.fat}/>
             </Row>
-            <Row>
-                <MealInfo macro={this.calorieCount()}/>
-                <MealInfo macro={this.proteinCount()}/>
-                <MealInfo macro={this.carbCount()}/>
-                <MealInfo macro={this.fatCount()}/>
-            </Row>
+            
+            <MealCard />
             <FoodSearchBar />
             </>
         )

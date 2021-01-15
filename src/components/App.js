@@ -8,6 +8,7 @@ import Header from './Header';
 import NewDiet from './NewDiet';
 import UserInfoForm from './UserInfoForm';
 import { getProfileFetch } from '../actions';
+import AddFoodPage from './AddFoodPage';
 
 
 
@@ -21,14 +22,15 @@ render() {
     return (
         <div className="container">
             <BrowserRouter>
-            <div>
+            
                 <Header />
                 <Route path="/" exact component={HomePage} />
                 <Route path="/sign-up" exact component={RegistrationForm} />
                 <Route path="/log-in" exact component={LoginForm} />
                 <Route path="/basic-info" exact component={UserInfoForm} />
                 <Route path="/new-diet" exact component={NewDiet} />
-            </div>
+                <Route path="/add-food" exact component={AddFoodPage} />
+        
             </BrowserRouter>
         </div>
     )
