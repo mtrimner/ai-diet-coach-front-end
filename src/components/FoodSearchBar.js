@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Col, Form, ListGroup, Image } from 'react-bootstrap';
 
-const FoodSearchBar = () => {
+const FoodSearchBar = (props) => {
     const [text, setText] = useState('');
     const [debouncedText, setDebouncedText] = useState(text);
     const [results, setResults] = useState([]);
@@ -39,11 +39,15 @@ const FoodSearchBar = () => {
         console.log(results)
     }, [debouncedText]);
 
+    const handleOnClick = (e) => {
+       props.getFoodInfo(e.target.innerText)
+    }
+
     const renderedResults = results.map((result) => {
         return (
-            <ListGroup>
-                <ListGroup.Item  as="li" action key={result.id} eventKey={result.id} >
-                    <Image src={result.photo.thumb} className="mr-5" fluid thumbnail style={{maxHeight: '80px', maxWidth: 'auto'}}/>
+            <ListGroup key={result.food_name}>
+                <ListGroup.Item  as="li" action eventKey={result.food_name} onClick={(e) => handleOnClick(e)} >
+                    <Image key={result.id} src={result.photo.thumb} className="mr-5" fluid thumbnail style={{maxHeight: '80px', maxWidth: 'auto'}}/>
                     {result.food_name}
                 </ListGroup.Item>
             </ListGroup>     
@@ -52,7 +56,7 @@ const FoodSearchBar = () => {
 
     return (
         <>
-        <Form>
+        <Form onSubmit={(e) => e.preventDefault()}>
             <Form.Group>
                 <Form.Label>Search Food</Form.Label>
                 <Form.Control type="text" value={text} onChange={e => setText(e.target.value)}/>

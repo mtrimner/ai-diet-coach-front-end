@@ -1,35 +1,67 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import FoodSearchBar from './FoodSearchBar';
 import { Card, Row, Col, Button, ProgressBar } from 'react-bootstrap';
 import {fetchNutritionRecommendations} from '../actions';
 import {connect} from 'react-redux';
+import FoodServingSizeSlider from './FoodServingSizeSlider';
 import MealInfo from './MealInfo';
 
-class AddFoodPage extends React.Component {
+const AddFoodPage = (props) =>  {
+const [selectedFood, setSelectedFood] = useState([])
 
-    componentDidMount() {
-        if (this.props.calories === null) {
-            this.props.fetchNutritionRecommendations()
+    useEffect(() => {
+        if (props.calories === null) {
+            props.fetchNutritionRecommendations()
         };
-    };
+    }, []);
 
-    calorieCount = () => {
-        return (this.props.calories / 4)
-    }
-    proteinCount = () => {
-       return  (this.props.protein / 4)
+    const getFoodInfo = (food) => {
+        const appId = process.env.REACT_APP_X_APP_ID
+        const appKey = process.env.REACT_APP_X_APP_KEY
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                'x-app-id': appId,
+                'x-app-key': appKey,
+                'x-remote-user-id': 0,
+                'Content-Type': 'application/json',
+            },
+             body: JSON.stringify({"query": food})
+         }
+        
+        fetch("https://trackapi.nutritionix.com/v2/natural/nutrients", requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            const multiplier = (data.foods[0].serving_weight_grams / 5)
+            const foodSelection = {
+                name: data.foods[0].food_name,
+                servingSize: data.foods[0].serving_weight_grams,
+                adjustedServingSize: 5,
+                protein: data.foods[0].nf_protein,
+                adjustedProtein: data.foods[0].nf_protein / multiplier,
+                carbs: data.foods[0].nf_total_carbohydrate,
+                adjustedCarbs: data.foods[0].nf_total_carbohydrate / multiplier,
+                fat: data.foods[0].nf_total_fat,
+                adjustedFat: data.foods[0].nf_total_fat / multiplier,
+                proteinConsumed: null,
+                carbsConsumed: null,
+                fatConsumed: null
+            }
+           setSelectedFood(selectedFood => [...selectedFood, foodSelection])
+        })
+        console.log(selectedFood)
     }
 
-    carbCount = () => {
-        return (this.props.carbs / 4)
+    const updateProgressBar = (grams, key) => {
+        console.log(grams, key)
     }
 
-    fatCount = () => {
-        return (this.props.fat / 4)
-    }
-
-    render() {
+        const renderFoodCards = selectedFood.map((food, i) => {
+            <FoodServingSizeSlider key={i} name={food.name} updateProgressBar={updateProgressBar}/>
+        })
+            
+        
         return(
             <>
                 <Card>
@@ -39,20 +71,24 @@ class AddFoodPage extends React.Component {
                             Meal 1
                         </Col>
                         <Col>
-                        <Button variant="outline-dark" onClick={() => {this.props.history.push('/add-food')}}>Add Food</Button>
+                        <Button variant="outline-dark" onClick={() => {props.history.push('/add-food')}}>Add Food</Button>
                         </Col>
                     </Row>
                     </Card.Header>
                 <Card.Body>
                 
-                       <ProgressBar now={1000} min={0} max={2000} />
+                       <ProgressBar striped variant="success" now={3000} min={0} max={2000} />
+                       <ProgressBar striped variant="info" now={20} />
+                       <ProgressBar striped variant="warning" now={60} />
+                       <ProgressBar striped variant="danger" now={80} />
                  
                 </Card.Body>
-            </Card>
-                <FoodSearchBar />
+                 </Card>
+                <FoodServingSizeSlider updateProgressBar={updateProgressBar}/>
+                <FoodSearchBar getFoodInfo={getFoodInfo}/>
             </>
         )
-    }
+    
 }
 
 const mapStateToProps = (state) => {
