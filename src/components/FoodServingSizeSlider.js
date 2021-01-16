@@ -6,13 +6,14 @@ const FoodServingSizeSlider = (props) => {
 
     const handleOnChange = (e) => {
         setValue(e.target.value)
-        props.updateProgressBar(value, props.key)
+        props.updateProgressBar(value, props.index)
     }
 
     return (
         <Card>
             <Card.Body>
                 <Form>
+                    <Form.Label>{props.name}</Form.Label>
                     <Form.Row>
                         <Col xs={4}>
                             <Form.Control readOnly value={`${value} grams`}/>

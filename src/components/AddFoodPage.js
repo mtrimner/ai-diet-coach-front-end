@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
 import { withRouter } from 'react-router-dom';
 import FoodSearchBar from './FoodSearchBar';
 import { Card, Row, Col, Button, ProgressBar } from 'react-bootstrap';
@@ -50,18 +50,33 @@ const [selectedFood, setSelectedFood] = useState([])
             }
            setSelectedFood(selectedFood => [...selectedFood, foodSelection])
         })
-        console.log(selectedFood)
+       console.log(selectedFood)
     }
 
-    const updateProgressBar = (grams, key) => {
-        console.log(grams, key)
+    const updateProgressBar = (grams, i) => {
+        const multiplier = grams / 5
+        setSelectedFood(selectedFood => [...selectedFood.slice(0, i),
+        {...selectedFood[i], proteinConsumed: selectedFood[i].adjustedProtein * multiplier,
+        carbsConsumed: selectedFood[i].adjustedProtein * multiplier,
+        fatConsumed: selectedFood[i].adjustedFat * multiplier},
+        ...selectedFood.slice(i+=1)]
+        )
+       
+        console.log(selectedFood, i)
     }
-
-        const renderFoodCards = selectedFood.map((food, i) => {
-            <FoodServingSizeSlider key={i} name={food.name} updateProgressBar={updateProgressBar}/>
-        })
             
+            
+    
+
+
         
+        const renderFoodCards = selectedFood.map((food, i) => {
+            return <FoodServingSizeSlider key={i} index={i} name={food.name} updateProgressBar={updateProgressBar}/>      
+        })
+   
+       
+
+       
         return(
             <>
                 <Card>
@@ -84,7 +99,7 @@ const [selectedFood, setSelectedFood] = useState([])
                  
                 </Card.Body>
                  </Card>
-                <FoodServingSizeSlider updateProgressBar={updateProgressBar}/>
+                {renderFoodCards}
                 <FoodSearchBar getFoodInfo={getFoodInfo}/>
             </>
         )
