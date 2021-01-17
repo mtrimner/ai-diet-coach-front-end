@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form, Col, Card } from 'react-bootstrap';
 
 const FoodServingSizeSlider = (props) => {
     const [ value, setValue] = useState(20)
+
+    useEffect(() => {
+        props.updateProgressBar(value, props.index)
+    }, [])
 
     const handleOnChange = (e) => {
         setValue(e.target.value)
@@ -23,6 +27,7 @@ const FoodServingSizeSlider = (props) => {
                                 type="range"
                                 value={value}
                                 step={5}
+                                max={500}
                                 onChange={(e) => handleOnChange(e)}
                             />
                         </Col>

@@ -7,8 +7,15 @@ import {connect} from 'react-redux';
 import FoodServingSizeSlider from './FoodServingSizeSlider';
 import MealInfo from './MealInfo';
 
+const defaultSliderValues = {
+    protein: 0,
+    fat: 0,
+    carbs: 0,
+    calories: 0
+}
 const AddFoodPage = (props) =>  {
 const [selectedFood, setSelectedFood] = useState([])
+const [sliderValue, setSliderValue] = useState(defaultSliderValues)
 
     useEffect(() => {
         if (props.calories === null) {
@@ -44,9 +51,9 @@ const [selectedFood, setSelectedFood] = useState([])
                 adjustedCarbs: data.foods[0].nf_total_carbohydrate / multiplier,
                 fat: data.foods[0].nf_total_fat,
                 adjustedFat: data.foods[0].nf_total_fat / multiplier,
-                proteinConsumed: null,
-                carbsConsumed: null,
-                fatConsumed: null
+                proteinConsumed: 0,
+                carbsConsumed: 0,
+                fatConsumed: 0
             }
            setSelectedFood(selectedFood => [...selectedFood, foodSelection])
         })
@@ -57,24 +64,67 @@ const [selectedFood, setSelectedFood] = useState([])
         const multiplier = grams / 5
         setSelectedFood(selectedFood => [...selectedFood.slice(0, i),
         {...selectedFood[i], proteinConsumed: selectedFood[i].adjustedProtein * multiplier,
-        carbsConsumed: selectedFood[i].adjustedProtein * multiplier,
+        carbsConsumed: selectedFood[i].adjustedCarbs * multiplier,
         fatConsumed: selectedFood[i].adjustedFat * multiplier},
         ...selectedFood.slice(i+=1)]
         )
-       
-        console.log(selectedFood, i)
-    }
-            
-            
-    
-
-
+            updateSliderValueState()
+        }
         
-        const renderFoodCards = selectedFood.map((food, i) => {
-            return <FoodServingSizeSlider key={i} index={i} name={food.name} updateProgressBar={updateProgressBar}/>      
-        })
-   
+        const updateSliderValueState = async () => {
+            console.log('Boom')
+            // const newArray = await filterKeys(selectedFood)
+          
+            const macros = await filterAndReduceMacros(selectedFood)
+            console.log(macros)
+            setSliderValue(sliderValue => {
+                return { ...sliderValue, protein: macros.proteinConsumed, carbs: macros.carbsConsumed, fat: macros.fatConsumed }
+            });
+        };
+
+        const filterAndReduceMacros = async (array) => {
        
+            const newArray = await filterKeys(array)
+            return newArray.reduce((acc, curr) => {
+                Object.keys(curr).forEach(key => {
+                    acc[key] = (acc[key] || 0) + curr[key];
+                });
+                return acc;
+            }, {});
+        }
+
+        const filterKeys = async (array) => {
+         
+            const keys_to_keep = ['proteinConsumed', 'fatConsumed', 'carbsConsumed']
+            return array.map(object => keys_to_keep.reduce((acc, curr) => {
+                acc[curr] = object[curr];
+          
+                return acc;
+            }, {})); 
+        };
+    
+        
+        
+        
+            const renderSliderValues = () => {
+               return selectedFood.reduce((a, b) => {
+                   console.log(selectedFood)
+                   debugger
+                       return {
+                            protein: a + b.proteinConsumed,
+                            carbs: a + b.carbsConsumed,
+                            fat: a + b.fatConsumed
+                            
+                        }
+                        // console.log(calculatedMacros)
+                        // updateSliderValueState(calculatedMacros)
+                }, 0)
+        }          
+  
+
+    const renderFoodCards = selectedFood.map((food, i) => {
+        return <FoodServingSizeSlider key={i} index={i} name={food.name} updateProgressBar={updateProgressBar}/>      
+    })
 
        
         return(
@@ -91,10 +141,10 @@ const [selectedFood, setSelectedFood] = useState([])
                     </Row>
                     </Card.Header>
                 <Card.Body>
-                
-                       <ProgressBar striped variant="success" now={3000} min={0} max={2000} />
-                       <ProgressBar striped variant="info" now={20} />
-                       <ProgressBar striped variant="warning" now={60} />
+                    
+                       <ProgressBar striped variant="success" now={sliderValue.protein} min={0} />
+                       <ProgressBar striped variant="info" now={sliderValue.carbs} />
+                       <ProgressBar striped variant="warning" now={40} />
                        <ProgressBar striped variant="danger" now={80} />
                  
                 </Card.Body>
@@ -115,4 +165,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {fetchNutritionRecommendations})(withRouter(AddFoodPage));
+export default connect(mapStateToProps, {fetchNutritionRecommendations})(withRouter(AddFoodPage))
