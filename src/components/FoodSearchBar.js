@@ -36,7 +36,6 @@ const FoodSearchBar = (props) => {
             })
         };
         if (text) { search() }
-        console.log(results)
     }, [debouncedText]);
 
     const handleOnClick = (e) => {

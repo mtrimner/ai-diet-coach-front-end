@@ -7,7 +7,7 @@ import HomePage from './HomePage';
 import Header from './Header';
 import NewDiet from './NewDiet';
 import UserInfoForm from './UserInfoForm';
-import { getProfileFetch } from '../actions';
+import { fetchUserAndDietParams, getProfileFetch, getDietParams } from '../actions';
 import AddFoodPage from './AddFoodPage';
 
 
@@ -15,7 +15,8 @@ import AddFoodPage from './AddFoodPage';
 class App extends React.Component {
 
     componentDidMount = () => {
-        this.props.getProfileFetch()
+        this.props.fetchUserAndDietParams()
+        // this.props.getProfileFetch()
     }
 
 render() {
@@ -37,4 +38,10 @@ render() {
 }
 }
 
-export default connect(null, {getProfileFetch})(App);
+const mapStateToProps = (state) => {
+    return { 
+             userId: state.auth.userId
+        }
+}
+
+export default connect(mapStateToProps, {getProfileFetch, getDietParams, fetchUserAndDietParams})(App);
