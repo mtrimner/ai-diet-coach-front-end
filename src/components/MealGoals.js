@@ -30,6 +30,8 @@ class MealGoals extends React.Component {
         return (this.props.fat / 4)
     }
 
+    
+
 
 
     render() {
@@ -42,8 +44,7 @@ class MealGoals extends React.Component {
                 <DailyTotalGoals amount={this.props.fat}/>
             </Row>
             
-            <MealCard />
-            <FoodSearchBar />
+            
             </>
         )
     };

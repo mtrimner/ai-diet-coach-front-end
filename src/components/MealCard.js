@@ -8,7 +8,7 @@ import MealInfo from './MealInfo';
 class MealCard extends React.Component {
 
     componentDidMount() {
-        if (this.props.calories === null) {
+        if (this.props.perMealMacros.calories === null) {
             this.props.fetchNutritionRecommendations()
         };
     };
@@ -30,12 +30,12 @@ class MealCard extends React.Component {
 
     render() {
         return (
-          
+        
             <Card>
                 <Card.Header>
                     <Row>
                         <Col>
-                            Meal 1
+                            Meal {this.props.mealNumber}
                         </Col>
                         <Col>
                         <Button variant="outline-dark" onClick={() => {this.props.history.push('/add-food')}}>Add Food</Button>
@@ -45,16 +45,16 @@ class MealCard extends React.Component {
                 <Card.Body>
                     <Row>
                         <Col>
-                            <MealInfo macro={this.calorieCount()}/>
+                            <MealInfo macro={this.props.perMealMacros.calories}/>
                         </Col>
                         <Col>
-                            <MealInfo macro={this.proteinCount()}/>
+                            <MealInfo macro={this.props.perMealMacros.protein}/>
                         </Col>
                         <Col>
-                            <MealInfo macro={this.carbCount()}/>
+                            <MealInfo macro={this.props.perMealMacros.carbs}/>
                         </Col>
                         <Col>
-                        <MealInfo macro={this.fatCount()}/>
+                        <MealInfo macro={this.props.perMealMacros.fat}/>
                         </Col>
                     </Row>
                 </Card.Body>
@@ -65,11 +65,11 @@ class MealCard extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { calories: state.macros.calories,
-             protein: state.macros.protein,
-             carbs: state.macros.carbs,
-             fat: state.macros.fat,
-             mealCount: state.dietParams.mealsPerDay
+    return { 
+        perMealMacros: state.macros.per_meal_macros,
+        dailyMacros: state.macros.daily_macros,
+        mealCount: state.dietParams.mealsPerDay,
+        userId: state.auth.userId
     }
 }
 

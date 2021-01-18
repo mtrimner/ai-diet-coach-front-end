@@ -2,25 +2,42 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchNutritionRecommendations } from '../actions'
 import MealGoals from '../components/MealGoals'
+import MealCard from '../components/MealCard';
 
 class Dashboard extends React.Component {
 
-    // componentDidMount() {
-    //     console.log(this.props.calories)
-    //     if (this.props.calories === null) {
-    //         this.props.fetchNutritionRecommendations()
-    //     }
-    // }
+
+
+    renderMealCards() { 
+        if (this.props.mealCount == null) {
+            return "rendering";
+        } else {
+            <MealCard />
+        const array = Array(this.props.mealCount).fill().map((x,i)=>i + 1)
+        return array.map((int) => {
+            console.log(int)
+           return (
+           <MealCard />
+           )
+        })
+    }
+    }
+    
     render() {
+
         return (
+            <>
+            <MealGoals />
+            {this.renderMealCards()}
             
-                <MealGoals />
-            
+            </>
         )
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return { calories: state.macros.calories }
-// }
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+        mealCount: state.dietParams.mealsPerDay
+    }
+}
+export default connect(mapStateToProps)(Dashboard);
