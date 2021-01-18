@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback} from 'react';
 import { withRouter } from 'react-router-dom';
 import FoodSearchBar from './FoodSearchBar';
 import { Card, Row, Col, Button, ProgressBar } from 'react-bootstrap';
-import {fetchNutritionRecommendations, getDietParams} from '../actions';
+import {fetchNutritionRecommendations, getDietParams, submitMeal} from '../actions';
 import {connect} from 'react-redux';
 import FoodServingSizeSlider from './FoodServingSizeSlider';
 import MealInfo from './MealInfo';
@@ -18,8 +18,7 @@ const [selectedFood, setSelectedFood] = useState([])
 const [sliderValue, setSliderValue] = useState(defaultSliderValues)
 
     useEffect(() => {
-        if (props.calories === null) {
-            
+        if (props.perMealMacros.calories === null) {
             props.fetchNutritionRecommendations()
         };
         
@@ -49,20 +48,20 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
             const multiplier = (data.foods[0].serving_weight_grams / 5)
             const foodSelection = {
                 name: data.foods[0].food_name,
-                servingSize: data.foods[0].serving_weight_grams,
-                adjustedServingSize: 5,
+                serving_size: data.foods[0].serving_weight_grams,
+                adjusted_serving_size: 5,
                 calories: data.foods[0].nf_calories,
-                adjustedCalories: data.foods[0].nf_calories / multiplier,
+                adjusted_calories: data.foods[0].nf_calories / multiplier,
                 protein: data.foods[0].nf_protein,
-                adjustedProtein: data.foods[0].nf_protein / multiplier,
+                adjusted_protein: data.foods[0].nf_protein / multiplier,
                 carbs: data.foods[0].nf_total_carbohydrate,
-                adjustedCarbs: data.foods[0].nf_total_carbohydrate / multiplier,
+                adjusted_carbs: data.foods[0].nf_total_carbohydrate / multiplier,
                 fat: data.foods[0].nf_total_fat,
-                adjustedFat: data.foods[0].nf_total_fat / multiplier,
-                caloriesConsumed: 0,
-                proteinConsumed: 0,
-                carbsConsumed: 0,
-                fatConsumed: 0
+                adjusted_fat: data.foods[0].nf_total_fat / multiplier,
+                calories_consumed: 0,
+                protein_consumed: 0,
+                carbs_consumed: 0,
+                fat_consumed: 0
             }
            setSelectedFood(selectedFood => [...selectedFood, foodSelection])
         })
@@ -72,10 +71,10 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
     const updateProgressBar = (grams, i) => {
         const multiplier = grams / 5
         setSelectedFood(selectedFood => [...selectedFood.slice(0, i),
-        {...selectedFood[i], proteinConsumed: Math.round(selectedFood[i].adjustedProtein * multiplier),
-        carbsConsumed: Math.round(selectedFood[i].adjustedCarbs * multiplier),
-        fatConsumed: Math.round(selectedFood[i].adjustedFat * multiplier),
-        caloriesConsumed: Math.round(selectedFood[i].adjustedCalories * multiplier)
+        {...selectedFood[i], protein_consumed: Math.round(selectedFood[i].adjusted_protein * multiplier),
+        carbs_consumed: Math.round(selectedFood[i].adjusted_carbs * multiplier),
+        fat_consumed: Math.round(selectedFood[i].adjusted_fat * multiplier),
+        calories_consumed: Math.round(selectedFood[i].adjusted_calories * multiplier)
         },
         ...selectedFood.slice(i+=1)]
         )
@@ -89,7 +88,7 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
             const macros = await filterAndReduceMacros(selectedFood)
             console.log(macros)
             setSliderValue(sliderValue => {
-                return { ...sliderValue, protein: macros.proteinConsumed, carbs: macros.carbsConsumed, fat: macros.fatConsumed, calories: macros.caloriesConsumed }
+                return { ...sliderValue, protein: macros.protein_consumed, carbs: macros.carbs_consumed, fat: macros.fat_consumed, calories: macros.calories_consumed }
             });
         };
 
@@ -106,7 +105,7 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
 
         const filterKeys = async (array) => {
          
-            const keys_to_keep = ['caloriesConsumed', 'proteinConsumed', 'fatConsumed', 'carbsConsumed']
+            const keys_to_keep = ['calories_consumed', 'protein_consumed', 'fat_consumed', 'carbs_consumed']
             return array.map(object => keys_to_keep.reduce((acc, curr) => {
                 acc[curr] = object[curr];
           
@@ -114,7 +113,10 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
             }, {})); 
         };
     
-        
+        const handleOnSubmit = (e) => {
+            e.preventDefault()
+            props.submitMeal(selectedFood, sliderValue)
+        }
         
         
             const renderSliderValues = () => {
@@ -122,10 +124,10 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
                    console.log(selectedFood)
                    debugger
                        return {
-                            protein: a + b.proteinConsumed,
-                            carbs: a + b.carbsConsumed,
-                            fat: a + b.fatConsumed,
-                            calories: a + b.caloriesConsumed
+                            protein: a + b.protein_consumed,
+                            carbs: a + b.carbs_consumed,
+                            fat: a + b.fat_consumed,
+                            calories: a + b.calories_consumed
                         }
                         // console.log(calculatedMacros)
                         // updateSliderValueState(calculatedMacros)
@@ -147,16 +149,16 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
                             Meal 1
                         </Col>
                         <Col>
-                        <Button variant="outline-dark" onClick={() => {props.history.push('/add-food')}}>Add Food</Button>
+                        <Button variant="outline-dark" onClick={(e) => {handleOnSubmit(e)}}>Submit Meal</Button>
                         </Col>
                     </Row>
                     </Card.Header>
                 <Card.Body>
                     
-                       <ProgressBar striped variant="success" now={sliderValue.protein} label={`Protein: ${sliderValue.protein} / ${Math.round((props.protein) / (props.mealCount))}grams`} max={`${Math.round((props.protein) / (props.mealCount))}`} />
-                       <ProgressBar striped variant="info" now={sliderValue.carbs} label={`Carbs: ${sliderValue.carbs} / ${Math.round((props.carbs) / (props.mealCount))}grams`} max={`${Math.round((props.carbs) / (props.mealCount))}`}/>
-                       <ProgressBar striped variant="warning" now={sliderValue.fat} label={`Fat: ${sliderValue.fat} / ${Math.round((props.fat) / (props.mealCount))}grams`} max={`${Math.round((props.fat) / (props.mealCount))}`}/>
-                       <ProgressBar striped variant="danger" now={sliderValue.calories} label={`Calories: ${sliderValue.calories} / ${Math.round((props.calories) / (props.mealCount))}`} max={`${Math.round((props.calories) / (props.mealCount))}`}/>
+                       <ProgressBar striped variant="success" now={sliderValue.protein} label={`Protein: ${sliderValue.protein} / ${Math.round(props.perMealMacros.protein)}grams`} max={`${Math.round(props.perMealMacros.protein)}`} />
+                       <ProgressBar striped variant="info" now={sliderValue.carbs} label={`Carbs: ${sliderValue.carbs} / ${Math.round(props.perMealMacros.carbs)}grams`} max={`${Math.round(props.perMealMacros.carbs)}`}/>
+                       <ProgressBar striped variant="warning" now={sliderValue.fat} label={`Fat: ${sliderValue.fat} / ${Math.round(props.perMealMacros.fat)}grams`} max={`${Math.round(props.perMealMacros.fat)}`}/>
+                       <ProgressBar striped variant="danger" now={sliderValue.calories} label={`Calories: ${sliderValue.calories} / ${Math.round(props.perMealMacros.calories)}`} max={`${Math.round(props.perMealMacros.calories)}`}/>
                  
                 </Card.Body>
                  </Card>
@@ -168,13 +170,11 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
 }
 
 const mapStateToProps = (state) => {
-    return { calories: state.macros.calories,
-             protein: state.macros.protein,
-             carbs: state.macros.carbs,
-             fat: state.macros.fat,
+    return { perMealMacros: state.macros.per_meal_macros,
+             dailyMacros: state.macros.daily_macros,
              mealCount: state.dietParams.mealsPerDay,
              userId: state.auth.userId
     }
 }
 
-export default connect(mapStateToProps, {fetchNutritionRecommendations, getDietParams})(withRouter(AddFoodPage))
+export default connect(mapStateToProps, {fetchNutritionRecommendations, getDietParams, submitMeal})(withRouter(AddFoodPage))
