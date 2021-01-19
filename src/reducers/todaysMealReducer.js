@@ -1,9 +1,7 @@
-
-
 export default (state = [], action) => {
 switch (action.type) {
     case 'ADD_MEALS':
-        data.map((meal, i) => {
+        return action.payload.map((meal, i) => {
             const mealFoods = meal.foods.map((food, j) => {
                 return ({
                     adjusted_calories: food.adjusted_calories,
@@ -25,26 +23,27 @@ switch (action.type) {
                     serving_size: food.serving_size
                 })
             })
+            debugger
             return ({
                 ...state,
-                   id: data[i].id,
-                    user_id: data[i].user_id,
-                    calorie_goal: data[i].calorie_goal,
-                    calories_consumed: data[i].calories_consumed,
-                    carb_goal: data[i].carb_goal,
-                    carbs_consumed: data[i].carbs_consumed,
-                    fat_goal: data[i].fat_goal,
-                    fat_consumed: data[i].fat_consumed,
-                    protein_goal: data[i].protein_goal,
-                    protein_consumed: data[i].protein_consumed,
-                    created_at: data[i].created_at,
-                    updated_at: data[i].updated_at,
+                   id: meal.id,
+                    user_id: meal.user_id,
+                    calorie_goal: meal.calorie_goal,
+                    calories_consumed: meal.calories_consumed,
+                    carb_goal: meal.carb_goal,
+                    carbs_consumed: meal.carbs_consumed,
+                    fat_goal: meal.fat_goal,
+                    fat_consumed: meal.fat_consumed,
+                    protein_goal: meal.protein_goal,
+                    protein_consumed: meal.protein_consumed,
+                    created_at: meal.created_at,
+                    updated_at: meal.updated_at,
                     foods: mealFoods
 
                 }
             )
         })
-    default:
-        return state;
-}
+        default:
+            return state;
+        }
 }
