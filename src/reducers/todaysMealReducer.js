@@ -1,8 +1,11 @@
 export default (state = [], action) => {
 switch (action.type) {
     case 'ADD_MEALS':
-        return action.payload.map((meal, i) => {
-            const mealFoods = meal.foods.map((food, j) => {
+        // return ( 
+        //     [
+        //     ...state,
+        const mealsArray = action.payload.map((meal) => {
+            const mealFoods = meal.foods.map((food) => {
                 return ({
                     adjusted_calories: food.adjusted_calories,
                     adjusted_carbs: food.adjusted_carbs,
@@ -23,9 +26,9 @@ switch (action.type) {
                     serving_size: food.serving_size
                 })
             })
-            debugger
-            return ({
-                ...state,
+         
+            return ( 
+                {
                    id: meal.id,
                     user_id: meal.user_id,
                     calorie_goal: meal.calorie_goal,
@@ -39,10 +42,11 @@ switch (action.type) {
                     created_at: meal.created_at,
                     updated_at: meal.updated_at,
                     foods: mealFoods
-
                 }
-            )
+          )
+            
         })
+        return state.concat(mealsArray)
         default:
             return state;
         }
