@@ -82,10 +82,10 @@ export const submitMeal = (foods, mealMacros) => (dispatch, getState) => {
     const data = {
         meal: {
         user_id: state.auth.userId,
-        calorie_goal:(state.macros.calories / state.dietParams.mealsPerDay),
-        fat_goal: (state.macros.fat / state.dietParams.mealsPerDay),
-        carb_goal: (state.macros.carbs / state.dietParams.mealsPerDay),
-        protein_goal: (state.macros.protein / state.dietParams.mealsPerDay),
+        calorie_goal:(state.macros.per_meal_macros.calories),
+        fat_goal: (state.macros.per_meal_macros.fat),
+        carb_goal: (state.macros.per_meal_macros.carbs),
+        protein_goal: (state.macros.per_meal_macros.protein),
         carbs_consumed: mealMacros.carbs,
         protein_consumed: mealMacros.protein,
         fat_consumed: mealMacros.fat,
@@ -108,4 +108,17 @@ export const submitMeal = (foods, mealMacros) => (dispatch, getState) => {
         .then(data => {
             console.log(data)
         })
+}
+
+export const fetchMeals = (date) => (dispatch) => {
+    const token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/meals/${date}`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log(data)
+    })
 }

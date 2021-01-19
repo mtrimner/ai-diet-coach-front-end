@@ -29,6 +29,7 @@ class MealCard extends React.Component {
     }
 
     render() {
+    
         return (
         
             <Card>
