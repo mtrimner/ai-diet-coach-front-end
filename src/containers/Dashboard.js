@@ -18,7 +18,7 @@ class Dashboard extends React.Component {
         const array = Array(this.props.mealCount).fill().map((x,i)=>i + 1)
         return array.map((int) => {
            return (
-           <MealCard key={int} mealNumber={int} />
+           <MealCard key={int} mealNumber={int} meal={this.props.meals[int-1]}/>
            )
         })
     }
@@ -38,7 +38,8 @@ class Dashboard extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        mealCount: state.dietParams.mealsPerDay
+        mealCount: state.dietParams.mealsPerDay,
+        meals: state.todaysMeals
     }
 }
 export default connect(mapStateToProps, { fetchMeals })(Dashboard);

@@ -13,23 +13,29 @@ class MealCard extends React.Component {
         };
     };
 
-    calorieCount = () => {
-        return (this.props.calories / 4)
-    }
-    proteinCount = () => {
-       return  (this.props.protein / 4)
-    }
+    // calorieCount = () => {
+    //     return (this.props.calories / 4)
+    // }
+    // proteinCount = () => {
+    //    return  (this.props.protein / 4)
+    // }
 
-    carbCount = () => {
-        return (this.props.carbs / 4)
-    }
+    // carbCount = () => {
+    //     return (this.props.carbs / 4)
+    // }
 
-    fatCount = () => {
-        return (this.props.fat / 4)
-    }
+    // fatCount = () => {
+    //     return (this.props.fat / 4)
+    // }
 
-    render() {
     
+    render() {
+        
+        const caloriesConsumed = this.props.meal === undefined ? 0 : this.props.meal.calories_consumed
+        const fatConsumed = this.props.meal === undefined ? 0 : this.props.meal.fat_consumed
+        const carbsConsumed = this.props.meal === undefined ? 0 : this.props.meal.carbs_consumed
+        const proteinConsumed = this.props.meal === undefined ? 0 : this.props.meal.protein_consumed
+
         return (
         
             <Card>
@@ -58,6 +64,20 @@ class MealCard extends React.Component {
                         <MealInfo macro={this.props.perMealMacros.fat}/>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col>
+                            <MealInfo macro={caloriesConsumed}/>
+                        </Col>
+                        <Col>
+                            <MealInfo macro={proteinConsumed}/>
+                        </Col>
+                        <Col>
+                            <MealInfo macro={carbsConsumed}/>
+                        </Col>
+                        <Col>
+                        <MealInfo macro={fatConsumed}/>
+                        </Col>
+                    </Row>
                 </Card.Body>
             </Card>
            
@@ -70,7 +90,7 @@ const mapStateToProps = (state) => {
         perMealMacros: state.macros.per_meal_macros,
         dailyMacros: state.macros.daily_macros,
         mealCount: state.dietParams.mealsPerDay,
-        userId: state.auth.userId
+        userId: state.auth.userId,
     }
 }
 

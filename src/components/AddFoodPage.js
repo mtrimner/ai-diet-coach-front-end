@@ -173,7 +173,7 @@ const mapStateToProps = (state) => {
     return { perMealMacros: state.macros.per_meal_macros,
              dailyMacros: state.macros.daily_macros,
              mealCount: state.dietParams.mealsPerDay,
-             userId: state.auth.userId
+             userId: state.auth.userId,
     }
 }
 

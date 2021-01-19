@@ -26,7 +26,6 @@ switch (action.type) {
                     serving_size: food.serving_size
                 })
             })
-         
             return ( 
                 {
                    id: meal.id,
