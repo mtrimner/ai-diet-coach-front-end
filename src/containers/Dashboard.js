@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchNutritionRecommendations, fetchMeals } from '../actions'
 import MealGoals from '../components/MealGoals'
 import MealCard from '../components/MealCard';
+import WeightChart from '../components/WeightChart';
 
 class Dashboard extends React.Component {
 
@@ -30,7 +31,7 @@ class Dashboard extends React.Component {
             <>
             <MealGoals />
             {this.renderMealCards()}
-            
+            <WeightChart />
             </>
         )
     }
