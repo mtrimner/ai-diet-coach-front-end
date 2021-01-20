@@ -10,6 +10,7 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case 'CHANGE_DIET':
+            
             return {
                 ...state,
                 goal: action.payload.goal,

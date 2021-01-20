@@ -122,3 +122,42 @@ export const fetchMeals = (date) => (dispatch) => {
         dispatch({type: 'ADD_MEALS', payload: data})
     })
 }
+
+export const getUserWeights = () => (dispatch) => {
+    const token = localStorage.getItem("token")
+    fetch(`http://localhost:3000/user_weights`, {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        dispatch({type: 'ADD_USER_WEIGHTS', payload: data})
+    })
+}
+
+export const submitWeight = (weight) => (dispatch, getState) => {
+    const token = localStorage.getItem("token")
+    const state = getState()
+    const data = {
+        user_weight: { 
+            weight: weight,
+            user_id: state.auth.userId
+        }
+    }
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+    }
+    fetch('http://localhost:3000/user_weights', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+        })
+}
