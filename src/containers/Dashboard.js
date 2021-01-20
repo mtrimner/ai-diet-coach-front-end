@@ -28,8 +28,8 @@ class Dashboard extends React.Component {
         })
     }
 
-    handleSubmit() {
-        this.props.submitWeight()
+    handleSubmit(weight) {
+        this.props.submitWeight(weight)
     }
 
     renderMealCards() { 
@@ -50,7 +50,7 @@ class Dashboard extends React.Component {
             <>
             <MealGoals />
             {this.renderMealCards()}
-            <EnterWeightModal show={this.state.showModal} handleShow={this.handleShow} handleClose={this.handleClose} handleSave={this.handleSave} />
+            <EnterWeightModal show={this.state.showModal} handleShow={this.handleShow} handleClose={this.handleClose} handleSubmit={this.handleSubmit} />
             <WeightChart weight={this.props.weight}/>
             </>
         )

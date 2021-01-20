@@ -5,6 +5,11 @@ const EnterWeightModal = (props) => {
 
     const [text, setText] = useState('')
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        props.handleSubmit(text)
+    }
+
     return (
         <>
         <Button variant="primary" onClick={() => props.handleShow()}>
@@ -15,7 +20,7 @@ const EnterWeightModal = (props) => {
                 <Modal.Title>Modal heading</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <Form id="weight-form" onSubmit={() => {console.log("it works")}}>
+                <Form id="weight-form" onSubmit={(e) => {handleSubmit(e)}}>
                     <Form.Group>
                         <Form.Label>Enter Weight</Form.Label>
                         <Form.Control type="number" placeholder="Weight" value={text} onChange={e => setText(e.target.value)}/>

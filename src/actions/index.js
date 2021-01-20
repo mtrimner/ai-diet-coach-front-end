@@ -145,7 +145,6 @@ export const submitWeight = (weight) => (dispatch, getState) => {
             user_id: state.auth.userId
         }
     }
-
     const requestOptions = {
         method: 'POST',
         headers: {
