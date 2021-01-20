@@ -1,43 +1,40 @@
 import 'react-vis/dist/style.css';
 import React from 'react'
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries} from 'react-vis';
+import {timeFormat} from 'd3-time-format';
+import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries, FlexibleWidthXYPlot} from 'react-vis';
 
-const WeightChart = (props) => {
-      const data = [
-        {x: 0, y: 8},
-        {x: 1, y: 5},
-        {x: 2, y: 4},
-        {x: 3, y: 9},
-        {x: 4, y: 1},
-        {x: 5, y: 7},
-        {x: 6, y: 6},
-        {x: 7, y: 3},
-        {x: 8, y: 2},
-        {x: 9, y: 0}
-      ];
+
+    const WeightChart = (props) => {
+        const data = props.weight.map((weight) => { 
+          const formatDate = timeFormat("%m/%d/%Y")
+          const date = new Date(weight.created_at)
+          const formattedDate = formatDate(date)
+          return {x: formattedDate, y: weight.weight}
+      })
+
+
       return (
-        <XYPlot width={300} height={300}>
+        <FlexibleWidthXYPlot xType="ordinal" height={300}>
         <HorizontalGridLines style={{stroke: '#B7E9ED'}} />
         <VerticalGridLines style={{stroke: '#B7E9ED'}} />
         <XAxis
-          title="X Axis"
+          title="Date"
           style={{
             line: {stroke: '#ADDDE1'},
             ticks: {stroke: '#ADDDE1'},
             text: {stroke: 'none', fill: '#6b6b76', fontWeight: 600}
           }}
         />
-        <YAxis title="Y Axis" />
+        <YAxis title="Weight" />
         <LineSeries
-          className="first-series"
-          data={[{x: 1, y: 3}, {x: 2, y: 5}, {x: 3, y: 15}, {x: 4, y: 12}]}
+          data={data}
           curve={'curveMonotoneX'}
           style={{
             strokeLinejoin: 'round',
-            strokeWidth: 4
+            strokeWidth: 3
           }}
         />
-        </XYPlot>
+        </FlexibleWidthXYPlot>
       );
     
   }
