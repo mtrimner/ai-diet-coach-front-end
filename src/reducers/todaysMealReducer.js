@@ -42,11 +42,11 @@ switch (action.type) {
                     updated_at: meal.updated_at,
                     foods: mealFoods
                 }
-          )
+            )
             
         })
         return state.concat(mealsArray)
         default:
             return state;
-        }
+    }
 }
