@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchNutritionRecommendations, fetchMeals, getUserWeights, submitWeight } from '../actions'
+import { fetchMeals, getUserWeights, submitWeight } from '../actions'
 import MealGoals from '../components/MealGoals'
 import MealCard from '../components/MealCard';
 import WeightChart from '../components/WeightChart';
@@ -28,7 +28,8 @@ class Dashboard extends React.Component {
         })
     }
 
-    handleSubmit(weight) {
+    handleSubmit = (weight) => {
+
         this.props.submitWeight(weight)
     }
 
@@ -46,6 +47,7 @@ class Dashboard extends React.Component {
     }
     
     render() {
+        
         return (
             <>
             <MealGoals />

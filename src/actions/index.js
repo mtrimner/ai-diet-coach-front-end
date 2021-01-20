@@ -157,6 +157,6 @@ export const submitWeight = (weight) => (dispatch, getState) => {
     fetch('http://localhost:3000/user_weights', requestOptions)
         .then(response => response.json())
         .then(data => {
-            console.log(data)
+            dispatch({type: "UPDATE_WEIGHT", payload: data})
         })
 }

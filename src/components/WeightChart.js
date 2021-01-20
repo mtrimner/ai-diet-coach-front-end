@@ -5,6 +5,7 @@ import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries
 
 
     const WeightChart = (props) => {
+
         const data = props.weight.map((weight) => { 
           const formatDate = timeFormat("%m/%d/%Y")
           const date = new Date(weight.created_at)
