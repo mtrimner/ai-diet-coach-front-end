@@ -59,7 +59,7 @@ const MealCard = (props) => {
 
         return (
         
-            <Card>
+            <Card className="shadow mt-3">
                 <Card.Header>
                     <Row>
                         <Col>
@@ -71,32 +71,46 @@ const MealCard = (props) => {
                     </Row>
                     </Card.Header>
                 <Card.Body>
-                    <Row>
+                <Row>
                         <Col>
-                            <MealInfo macro={props.perMealMacros.calories}/>
+                            <p className="text-center font-weight-bold">Calories</p>
                         </Col>
                         <Col>
-                            <MealInfo macro={props.perMealMacros.protein}/>
+                        <p className="text-center font-weight-bold">Protein</p>
                         </Col>
                         <Col>
-                            <MealInfo macro={props.perMealMacros.carbs}/>
+                        <p className="text-center font-weight-bold">Carbs</p>
                         </Col>
                         <Col>
-                        <MealInfo macro={props.perMealMacros.fat}/>
+                        <p className="text-center font-weight-bold">Fat</p>
                         </Col>
                     </Row>
                     <Row>
-                        <Col>
-                            <MealInfo macro={caloriesConsumed}/>
+                        <Col className="d-flex align-items-center justify-content-center mb-1">
+                            <MealInfo macro={`Goal: ${props.perMealMacros.calories}`} variant={props.variant}/>
                         </Col>
-                        <Col>
-                            <MealInfo macro={proteinConsumed}/>
+                        <Col className="d-flex align-items-center justify-content-center mb-1">
+                            <MealInfo macro={`Goal: ${props.perMealMacros.protein}`} variant={props.variant}/>
                         </Col>
-                        <Col>
-                            <MealInfo macro={carbsConsumed}/>
+                        <Col className="d-flex align-items-center justify-content-center mb-1">
+                            <MealInfo macro={`Goal: ${props.perMealMacros.carbs}`} variant={props.variant}/>
                         </Col>
-                        <Col>
-                        <MealInfo macro={fatConsumed}/>
+                        <Col className="d-flex align-items-center justify-content-center mb-1">
+                        <MealInfo macro={`Goal: ${props.perMealMacros.fat}`} variant={props.variant}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col className="d-flex align-items-center justify-content-center">
+                            <MealInfo macro={`Consumed: ${caloriesConsumed}`} variant={props.variant}/>
+                        </Col>
+                        <Col className="d-flex align-items-center justify-content-center">
+                            <MealInfo macro={`Consumed: ${proteinConsumed}`} variant={props.variant}/>
+                        </Col>
+                        <Col className="d-flex align-items-center justify-content-center">
+                            <MealInfo macro={`Consumed: ${carbsConsumed}`} variant={props.variant}/>
+                        </Col>
+                        <Col className="d-flex align-items-center justify-content-center">
+                        <MealInfo macro={`Consumed: ${fatConsumed}`} variant={props.variant}/>
                         </Col>
                     </Row>
                 </Card.Body>

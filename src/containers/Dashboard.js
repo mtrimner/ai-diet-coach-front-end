@@ -40,7 +40,7 @@ class Dashboard extends React.Component {
         const array = Array(this.props.mealCount).fill().map((x,i)=>i + 1)
         return array.map((int) => {
            return (
-           <MealCard key={int} mealNumber={int} meal={this.props.meals[int-1]}/>
+           <MealCard key={int} mealNumber={int} meal={this.props.meals[int-1]} variant="info"/>
            )
         })
         }

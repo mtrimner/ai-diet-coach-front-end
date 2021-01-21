@@ -27,7 +27,7 @@ const FoodServingSizeSlider = (props) => {
                                 type="range"
                                 value={value}
                                 step={5}
-                                max={500}
+                                max={300}
                                 onChange={(e) => handleOnChange(e)}
                             />
                         </Col>

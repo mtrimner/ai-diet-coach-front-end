@@ -1,14 +1,12 @@
 import React from 'react'
 import { Col } from 'react-bootstrap';
+import DisplayBadge from './DisplayBadge';
 
 const MealInfo = (props) => {
 
     return(
         
-         <Col>
-             {props.macro}
-         </Col>
-        
+        <DisplayBadge value={props.macro} variant={props.variant}/>
     )
 }
 
