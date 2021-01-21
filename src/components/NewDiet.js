@@ -6,32 +6,42 @@ import { changeDiet } from '../actions';
 
 class NewDiet extends Component {
     state = {
-        goal: "",
-        activity_level: "",
-        start_date: "",
-        end_date: "",
-        meals_per_day: "",
-        target_weight: "",
-        current_weight: ""
+        fields: {
+            goal: "",
+            activity_level: "",
+            start_date: "",
+            end_date: "",
+            meals_per_day: "",
+            target_weight: "",
+            current_weight: ""
+        },
+        errors: {}
     }
 
     onInputChange = event => {
         this.setState({
-            [event.target.name]: event.target.value,
+          fields: {...this.state.fields, [event.target.name]: event.target.value}
         });
+
         console.log(this.state)
     }
 
     onFormSubmit = (event) => {
-        const token = localStorage.getItem("token")
         event.preventDefault();
+
+        if(!this.handleValidation()){
+            for (const [key, value] of Object.entries(this.state.errors)) {
+               return  alert(`${key}: ${value}`);
+            }
+        } else {
+        const token = localStorage.getItem("token")
         const data = { diet: {
-            goal: this.state.goal,
-            activity_level: this.state.activity_level,
-            start_date: this.state.start_date,
-            end_date: this.state.end_date,
-            meals_per_day: this.state.meals_per_day,
-            target_weight: this.state.target_weight,
+            goal: this.state.fields.goal,
+            activity_level: this.state.fields.activity_level,
+            start_date: this.state.fields.start_date,
+            end_date: this.state.fields.end_date,
+            meals_per_day: this.state.fields.meals_per_day,
+            target_weight: this.state.fields.target_weight,
             user_weights_attributes: [{
                 weight: this.state.current_weight,
                 user_id: this.props.userId
@@ -53,6 +63,45 @@ class NewDiet extends Component {
         .then(data => {
             this.props.changeDiet(data)
         })
+        }
+    }
+
+    handleValidation = () => {
+        let fields = this.state.fields;
+        let errors = {};
+        let formIsValid = true;
+
+        if(fields["goal"] === "" || !fields["goal"]){
+            formIsValid = false;
+            errors["goal"] = "Must select a goal"
+        }
+
+        if(fields["activity_level"] === "" || !fields["activity_level"]){
+            formIsValid = false;
+            errors["activity_level"] = "Must select an activity level"
+        }
+
+        if(fields["start_date"] === "" || !fields["start_date"]){
+            formIsValid = false;
+            errors["start_date"] = "Must select a start_date"
+        }
+
+        if(fields["end_date"] === "" || !fields["end_date"]){
+            formIsValid = false;
+            errors["end_date"] = "Must select an end date"
+        }
+
+        if(fields["meals_per_day"] === "" || !fields["meals_per_day"]){
+            formIsValid = false;
+            errors["meals_per_day"] = "Meals per day cannot be blank"
+        }
+
+        if(fields["target_weight"] === "" || !fields["target_weight"]){
+            formIsValid = false;
+            errors["target_weight"] = "Must select an target weight"
+        }
+        this.setState({errors: errors})
+        return formIsValid
     }
 
     render() {
@@ -111,7 +160,7 @@ class NewDiet extends Component {
                         <Flatpickr 
                             data-input
                             options={{altInput: true, wrap: true, altInputClass: "hide form-control"}}
-                            onChange={date => {this.setState({start_date: date[0]})}}
+                            onChange={date => {this.setState({fields: {...this.state.fields, start_date: date[0]}})}}
                         >
                         <label htmlFor="startDate">Diet Start Date</label>
                         <input type="date" name="start_date" id="start_date" placeholder="Diet Start Date" className="form-control" data-input/>
@@ -121,23 +170,23 @@ class NewDiet extends Component {
                         <Flatpickr 
                             data-input
                             options={{altInput: true, wrap: true, altInputClass: "hide form-control"}}
-                            onChange={date => {this.setState({end_date: date[0]})}}
+                            onChange={date => {this.setState({fields: {...this.state.fields, end_date: date[0]}})}}
                         >
-                        <label htmlFor="endDate">Diet Start Date</label>
+                        <label htmlFor="endDate">Diet End Date</label>
                         <input type="date" name="end_date" id="end_date" placeholder="Diet End Date" className="form-control" data-input/>
                         </Flatpickr> 
                     </div>
                     <div className="mb-3">
                         <label htmlFor="mealsPerDayInput">Meals Per Day</label>
-                        <input type="number" name="meals_per_day" className="form-control" id="mealsPerDayInput" placeholder="Meals Per Day" value={this.state.meals_per_day} onChange={this.onInputChange}/>
+                        <input type="number" name="meals_per_day" className="form-control" id="mealsPerDayInput" placeholder="Meals Per Day" value={this.state.fields.meals_per_day} onChange={this.onInputChange}/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="currentWeightInput">Current Weight</label>
-                        <input type="number" name="current_weight" className="form-control" id="currentWeightInput" placeholder="pounds" value={this.state.current_weight} onChange={this.onInputChange}/>
+                        <input type="number" name="current_weight" className="form-control" id="currentWeightInput" placeholder="pounds" value={this.state.fields.current_weight} onChange={this.onInputChange}/>
                     </div>
                     <div className="mb-3">
                         <label htmlFor="targetWeightInput">Target Weight</label>
-                        <input type="number" name="target_weight" className="form-control" id="targetWeightInput" placeholder="pounds" value={this.state.target_weight} onChange={this.onInputChange}/>
+                        <input type="number" name="target_weight" className="form-control" id="targetWeightInput" placeholder="pounds" value={this.state.fields.target_weight} onChange={this.onInputChange}/>
                     </div>
                     <input className="btn btn-dark" type="submit" />
                 </form>

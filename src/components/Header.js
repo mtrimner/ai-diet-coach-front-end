@@ -11,7 +11,7 @@ const Header = (props) => {
         <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="sign-in">Sign In</Nav.Link>
-            <Nav.Link as={Link} to="new-diet">New Diet</Nav.Link>
+            <Nav.Link as={Link} to="new-diet" onClick={() => {alert("Starting a new diet will reset all current parameters. Are you sure you want to start a new diet?")}}>New Diet</Nav.Link>
             <Authorization />
         </Nav>
         <Navbar.Text>
