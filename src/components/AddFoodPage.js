@@ -119,24 +119,9 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
                 return null } else {
                 props.submitMeal(selectedFood, sliderValue)
                 }
-            // props.submitMeal(selectedFood, sliderValue)
+            props.history.push("/")
         }
-        
-        
-        //     const renderSliderValues = () => {
-        //        return selectedFood.reduce((a, b) => {
-        //            console.log(selectedFood)
-        //            debugger
-        //                return {
-        //                     protein: a + b.protein_consumed,
-        //                     carbs: a + b.carbs_consumed,
-        //                     fat: a + b.fat_consumed,
-        //                     calories: a + b.calories_consumed
-        //                 }
-        //                 // console.log(calculatedMacros)
-        //                 // updateSliderValueState(calculatedMacros)
-        //         }, 0)
-        // }          
+                
   
 
     const renderFoodCards = selectedFood.map((food, i) => {
