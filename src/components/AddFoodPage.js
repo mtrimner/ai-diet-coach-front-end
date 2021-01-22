@@ -146,7 +146,7 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
        
         return(
             <>
-                <Card>
+                <Card className="mt-3">
                 <Card.Header>
                     <Row>
                         <Col>
@@ -159,10 +159,10 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
                     </Card.Header>
                 <Card.Body>
                     
-                       <ProgressBar striped variant="success" now={sliderValue.protein} label={`Protein: ${sliderValue.protein} / ${Math.round(props.perMealMacros.protein)}grams`} max={`${Math.round(props.perMealMacros.protein)}`} />
-                       <ProgressBar striped variant="info" now={sliderValue.carbs} label={`Carbs: ${sliderValue.carbs} / ${Math.round(props.perMealMacros.carbs)}grams`} max={`${Math.round(props.perMealMacros.carbs)}`}/>
-                       <ProgressBar striped variant="warning" now={sliderValue.fat} label={`Fat: ${sliderValue.fat} / ${Math.round(props.perMealMacros.fat)}grams`} max={`${Math.round(props.perMealMacros.fat)}`}/>
-                       <ProgressBar striped variant="danger" now={sliderValue.calories} label={`Calories: ${sliderValue.calories} / ${Math.round(props.perMealMacros.calories)}`} max={`${Math.round(props.perMealMacros.calories)}`}/>
+                       <ProgressBar className="mb-1" striped variant="success" now={sliderValue.protein} label={`Protein: ${sliderValue.protein} / ${Math.round(props.perMealMacros.protein)}grams`} max={`${Math.round(props.perMealMacros.protein)}`} />
+                       <ProgressBar className="mb-1" striped variant="info" now={sliderValue.carbs} label={`Carbs: ${sliderValue.carbs} / ${Math.round(props.perMealMacros.carbs)}grams`} max={`${Math.round(props.perMealMacros.carbs)}`}/>
+                       <ProgressBar className="mb-1" striped variant="warning" now={sliderValue.fat} label={`Fat: ${sliderValue.fat} / ${Math.round(props.perMealMacros.fat)}grams`} max={`${Math.round(props.perMealMacros.fat)}`}/>
+                       <ProgressBar className="mb-1" striped variant="danger" now={sliderValue.calories} label={`Calories: ${sliderValue.calories} / ${Math.round(props.perMealMacros.calories)}`} max={`${Math.round(props.perMealMacros.calories)}`}/>
                  
                 </Card.Body>
                  </Card>

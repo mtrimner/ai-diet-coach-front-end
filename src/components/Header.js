@@ -7,16 +7,21 @@ import Authorization from './Authorization';
 
 const Header = (props) => {
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" >
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
             <Nav.Link as={Link} to="/">Home</Nav.Link>
             <Nav.Link as={Link} to="sign-in">Sign In</Nav.Link>
             <Nav.Link as={Link} to="new-diet" onClick={() => {alert("Starting a new diet will reset all current parameters. Are you sure you want to start a new diet?")}}>New Diet</Nav.Link>
-            <Authorization />
         </Nav>
-        <Navbar.Text>
-           Welcome <Link to="/">{props.currentUser}</Link>
-        </Navbar.Text>
+        <Nav className="mr-auto">
+            <Authorization />
+            <Navbar.Text className="ml-3">
+                Welcome <Link to="/">{props.currentUser}</Link>
+            </Navbar.Text>
+        </Nav>
+        </Navbar.Collapse>
         </Navbar>
     )
 }

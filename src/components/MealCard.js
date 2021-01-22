@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Card, Row, Col, Button } from 'react-bootstrap';
@@ -7,11 +7,28 @@ import MealInfo from './MealInfo';
 
 const MealCard = (props) => {
 
+    const [mealCount, setMealCount] = useState(props.mealCount)
+
     useEffect(() =>  {
+
         if (props.perMealMacros.calories === null) {
             props.fetchNutritionRecommendations()
         };
     }, []);
+
+    const prevMealCountRef = useRef();
+    useEffect(() => {
+        
+        prevMealCountRef.current = mealCount;
+    }, [props.mealCount])
+    
+        const prevMealCount = prevMealCountRef.current
+        if (prevMealCount !== props.mealCount) {
+            props.fetchNutritionRecommendations()
+        }
+    
+
+
 
     // calorieCount = () => {
     //     return (this.props.calories / 4)

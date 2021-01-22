@@ -1,5 +1,6 @@
 import "flatpickr/dist/themes/dark.css";
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signIn, signOut } from '../actions';
 import Flatpickr from 'react-flatpickr';
@@ -42,6 +43,7 @@ class UserInfoForm extends React.Component {
         .then(response => response.json())
         .then(data => {
             this.props.signIn(data)
+            this.props.history.push("/new-diet")
         })
     }
 
@@ -114,4 +116,4 @@ const mapStateToProps = (state) => {
     return {userId: state.auth.userId}
 }
 
-export default connect(mapStateToProps, { signIn })(UserInfoForm);
+export default connect(mapStateToProps, { signIn })(withRouter(UserInfoForm));

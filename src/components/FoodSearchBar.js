@@ -32,6 +32,7 @@ const FoodSearchBar = (props) => {
             fetch(`https://trackapi.nutritionix.com/v2/search/instant?query=${debouncedText}&branded_type=2`, requestOptions)
             .then(response => response.json())
             .then(data => {
+                console.log(data)
                 setResults(data.common)
             })
         };
@@ -46,7 +47,7 @@ const FoodSearchBar = (props) => {
         return (
             <ListGroup key={result.food_name}>
                 <ListGroup.Item  as="li" action eventKey={result.food_name} onClick={(e) => handleOnClick(e)} >
-                    <Image key={result.id} src={result.photo.thumb} className="mr-5" fluid thumbnail style={{maxHeight: '80px', maxWidth: 'auto'}}/>
+                    <Image key={result.id} src={result.photo.thumb} className="mr-5" fluid thumbnail style={{maxHeight: '60px', maxWidth: 'auto'}}/>
                     {result.food_name}
                 </ListGroup.Item>
             </ListGroup>     
@@ -55,7 +56,7 @@ const FoodSearchBar = (props) => {
 
     return (
         <>
-        <Form onSubmit={(e) => e.preventDefault()}>
+        <Form className="mt-3" onSubmit={(e) => e.preventDefault()}>
             <Form.Group>
                 <Form.Label>Search Food</Form.Label>
                 <Form.Control type="text" value={text} onChange={e => setText(e.target.value)}/>

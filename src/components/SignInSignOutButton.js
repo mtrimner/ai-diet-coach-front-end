@@ -7,7 +7,7 @@ import { signIn, signOut } from '../actions';
 const SignInSignOutButton = (props) => {
     return (
         <div>
-            <button type="button" className="btn btn-light" onClick={() => props.onButtonClick()}>{props.buttonText}</button>
+            <button type="button" className="btn-sm btn-light" onClick={() => props.onButtonClick()}>{props.buttonText}</button>
         </div>
     );
 };

@@ -43,7 +43,7 @@ class NewDiet extends Component {
             meals_per_day: this.state.fields.meals_per_day,
             target_weight: this.state.fields.target_weight,
             user_weights_attributes: [{
-                weight: this.state.current_weight,
+                weight: this.state.fields.current_weight,
                 user_id: this.props.userId
             }]
             }
@@ -96,9 +96,14 @@ class NewDiet extends Component {
             errors["meals_per_day"] = "Meals per day cannot be blank"
         }
 
+        if(fields["current_weight"] === "" || !fields["current_weight"]){
+            formIsValid = false;
+            errors["current_weight"] = "Must select a current weight"
+        }
+
         if(fields["target_weight"] === "" || !fields["target_weight"]){
             formIsValid = false;
-            errors["target_weight"] = "Must select an target weight"
+            errors["target_weight"] = "Must select a target weight"
         }
         this.setState({errors: errors})
         return formIsValid
