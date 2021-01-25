@@ -2,10 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Row } from 'react-bootstrap';
 import { fetchNutritionRecommendations } from '../actions';
-import MealInfo from './MealInfo';
 import DailyTotalGoals from './DailyTotalGoals';
-import FoodSearchBar from './FoodSearchBar'
-import MealCard from './MealCard';
+
 
 class MealGoals extends React.Component {
 

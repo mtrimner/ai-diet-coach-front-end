@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { Modal, Button, Form} from 'react-bootstrap';
+import { withRouter } from 'react-router-dom';
 
 const EnterWeightModal = (props) => {
 
@@ -8,12 +9,13 @@ const EnterWeightModal = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         props.handleSubmit(text)
+        props.handleClose()
     }
 
     return (
         <>
-        <Button variant="primary" onClick={() => props.handleShow()}>
-        Launch demo modal
+        <Button className="mt-3" variant="primary" onClick={() => props.handleShow()}>
+        Add Weight
       </Button>
         <Modal size="sm" show={props.show} onHide={props.handleClose}>
             <Modal.Header closeButton>
@@ -38,4 +40,4 @@ const EnterWeightModal = (props) => {
     )
 }
 
-export default EnterWeightModal;
+export default withRouter(EnterWeightModal);

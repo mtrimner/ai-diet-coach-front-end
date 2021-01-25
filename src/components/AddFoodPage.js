@@ -114,7 +114,6 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
     
         const handleOnSubmit = (e) => {
             e.preventDefault()
-            debugger
             if (sliderValue.calories === 0) {
                 return null } else {
                 props.submitMeal(selectedFood, sliderValue)

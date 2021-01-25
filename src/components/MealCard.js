@@ -21,29 +21,12 @@ const MealCard = (props) => {
         
         prevMealCountRef.current = mealCount;
     }, [props.mealCount])
-    
+
         const prevMealCount = prevMealCountRef.current
         if (prevMealCount !== props.mealCount) {
             props.fetchNutritionRecommendations()
         }
     
-
-
-
-    // calorieCount = () => {
-    //     return (this.props.calories / 4)
-    // }
-    // proteinCount = () => {
-    //    return  (this.props.protein / 4)
-    // }
-
-    // carbCount = () => {
-    //     return (this.props.carbs / 4)
-    // }
-
-    // fatCount = () => {
-    //     return (this.props.fat / 4)
-    // }
 
     const caloriesConsumed = props.meal === undefined ? 0 : props.meal.calories_consumed
     const fatConsumed = props.meal === undefined ? 0 : props.meal.fat_consumed
@@ -59,20 +42,6 @@ const MealCard = (props) => {
         }
     } 
     
-    
-    
-        
-        // const caloriesConsumed = this.props.meal === undefined ? 0 : this.props.meal.calories_consumed
-        // const fatConsumed = this.props.meal === undefined ? 0 : this.props.meal.fat_consumed
-        // const carbsConsumed = this.props.meal === undefined ? 0 : this.props.meal.carbs_consumed
-        // const proteinConsumed = this.props.meal === undefined ? 0 : this.props.meal.protein_consumed
-        // buttonType = () => {
-        //     if (caloriesConsumed === 0) {
-        //         return <Button variant="outline-dark" onClick={() => {this.props.history.push('/add-food')}}>Add Meal</Button>
-        //     } else {
-        //         return "Finished!"
-        //     }
-        // } 
 
         return (
         

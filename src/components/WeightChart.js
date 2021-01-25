@@ -1,7 +1,7 @@
 import 'react-vis/dist/style.css';
 import React from 'react'
 import {timeFormat} from 'd3-time-format';
-import {XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries, FlexibleWidthXYPlot} from 'react-vis';
+import {XAxis, YAxis, HorizontalGridLines, VerticalGridLines, LineSeries, FlexibleWidthXYPlot} from 'react-vis';
 
 
     const WeightChart = (props) => {
