@@ -22,9 +22,6 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
             props.fetchNutritionRecommendations()
         };
         
-        // if (props.mealCount === null) {
-        //     props.getDietParams(props.userId)
-        // }
     }, []);
 
     const getFoodInfo = (food) => {

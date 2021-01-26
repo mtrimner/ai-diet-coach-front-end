@@ -62,6 +62,7 @@ class NewDiet extends Component {
         .then(response => response.json())
         .then(data => {
             this.props.changeDiet(data)
+            this.props.history.push('/')
         })
         }
     }

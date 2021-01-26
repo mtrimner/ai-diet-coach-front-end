@@ -41,7 +41,7 @@ class RegistrationForm extends React.Component {
         .then(data => {
             this.props.signIn(data.user)
             localStorage.setItem("token", data.token)
-            
+            this.props.history.push('/basic-info')
         })
     }
 
