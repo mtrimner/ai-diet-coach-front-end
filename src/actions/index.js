@@ -107,7 +107,10 @@ export const submitMeal = (foods, mealMacros) => (dispatch, getState) => {
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            // const date = Date.now()
+            // dispatch(fetchMeals(date))
         })
+        
 }
 
 export const fetchMeals = (date) => (dispatch) => {

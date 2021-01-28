@@ -78,9 +78,8 @@ const [sliderValue, setSliderValue] = useState(defaultSliderValues)
         }
         
         const updateSliderValueState = async () => {
-            console.log('Boom')
-            // const newArray = await filterKeys(selectedFood)
-          
+            
+            
             const macros = await filterAndReduceMacros(selectedFood)
             console.log(macros)
             setSliderValue(sliderValue => {

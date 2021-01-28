@@ -11,9 +11,14 @@ class Dashboard extends React.Component {
     state = {showModal: false}
 
     componentDidMount() {
+        // const date = Date.now()
+        // this.props.fetchMeals(date)
+        this.props.getUserWeights()
+    }
+
+    componentDidUpdate() {
         const date = Date.now()
         this.props.fetchMeals(date)
-        this.props.getUserWeights()
     }
 
     handleClose = () => {

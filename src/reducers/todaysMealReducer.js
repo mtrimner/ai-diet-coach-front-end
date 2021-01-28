@@ -1,9 +1,7 @@
 export default (state = [], action) => {
 switch (action.type) {
     case 'ADD_MEALS':
-        // return ( 
-        //     [
-        //     ...state,
+        
         const mealsArray = action.payload.map((meal) => {
             const mealFoods = meal.foods.map((food) => {
                 return ({
@@ -26,7 +24,7 @@ switch (action.type) {
                     serving_size: food.serving_size
                 })
             })
-            return ( 
+            return (
                 {
                    id: meal.id,
                     user_id: meal.user_id,
