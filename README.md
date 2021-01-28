@@ -41,7 +41,7 @@ to start your front end and back end server and enter localhost:3000 in your bro
 
 # Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/mtrimner/DietCoach
+Bug reports and pull requests are welcome on GitHub at https://github.com/mtrimner/ai-diet-coach-front-end
 
 # License
 
