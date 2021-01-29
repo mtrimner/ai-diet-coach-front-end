@@ -122,6 +122,7 @@ export const fetchMeals = (date) => (dispatch) => {
     })
     .then(resp => resp.json())
     .then(data => {
+        debugger
         dispatch({type: 'ADD_MEALS', payload: data})
     })
 }

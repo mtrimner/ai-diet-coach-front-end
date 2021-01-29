@@ -11,15 +11,18 @@ class Dashboard extends React.Component {
     state = {showModal: false}
 
     componentDidMount() {
-        // const date = Date.now()
-        // this.props.fetchMeals(date)
+        const date = Date.now()
+        this.props.fetchMeals(date)
         this.props.getUserWeights()
     }
 
-    componentDidUpdate() {
-        const date = Date.now()
-        this.props.fetchMeals(date)
-    }
+    // componentDidUpdate() {
+    //     if (this.props.meals[0] !== undefined || this.props.meals[0] !== []) {
+    //     const date = Date.now()
+    //     debugger
+    //     this.props.fetchMeals(date)
+    //     }
+    // }
 
     handleClose = () => {
         this.setState({
